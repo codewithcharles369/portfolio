@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code With Charles – Web Developer Portfolio</title>
+  <meta name="description" content="Charles is a passionate web developer creating sleek, modern websites and web apps for small businesses and startups.">
+  <meta name="keywords" content="web developer, portfolio, web design, web development, Charles, responsive design, UI/UX">
+  <meta name="author" content="Charles">
+  <meta property="og:title" content="Code With Charles – Web Developer Portfolio">
+  <meta property="og:description" content="Explore Charles' portfolio showcasing modern, responsive websites and web applications built with HTML, CSS, JavaScript, and more.">
+  <meta property="og:image" content="assets/og-image.jpg">
+  <meta property="og:url" content="https://yourwebsite.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, nav a {
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none
+    }
+  .nav-link {
+    position: relative;
+    padding-bottom: 6px;
+    color: #C9D1D9;
+    font-weight: 500;
+    transition: color .22s ease;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background-color: #1F6FEB;
+    transition: width .28s cubic-bezier(.2,.9,.2,1);
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    color: #58A6FF;
+    outline: none;
+  }
+
+  /* Desktop moving underline */
+  #nav-underline {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, #58A6FF, #1F6FEB);
+    border-radius: 99px;
+    transform-origin: left center;
+    transition: transform .28s cubic-bezier(.2,.9,.2,1), width .28s cubic-bezier(.2,.9,.2,1), left .28s cubic-bezier(.2,.9,.2,1), opacity .2s;
+    pointer-events: none;
+    box-shadow: 0 6px 18px rgba(31,111,235,0.08);
+    opacity: 0;
+  }
+
+  /* active link state uses aria-current */
+  .nav-link[aria-current="page"] {
+    color: #1F6FEB;
+    font-weight: 600;
+  }
+
+  /* mobile menu open styles (toggled via JS classes) */
+  .menu-open { display: block !important; opacity: 1 !important; transform: translateY(0) !important; }
+
+  /* focus-outline for keyboard users */
+  .nav-link:focus-visible {
+    box-shadow: 0 0 0 6px rgba(31,111,235,0.08);
+    border-radius: 6px;
+  }
+
+  /* mobile smaller spacing */
+  @media (max-width: 640px) {
+    .nav-link { font-size: .95rem; padding-bottom: 4px; }
+  }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes glitch {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      20% { transform: scale(1.01) rotate(1deg); opacity: 0.95; }
+      40% { transform: scale(0.99) rotate(-1deg); opacity: 1; }
+      60% { transform: scale(1.02) rotate(0.5deg); opacity: 0.9; }
+      80% { transform: scale(0.98) rotate(-0.5deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .animate-glitch {
+      animation: glitch 0.4s ease-in-out;
+    }
+    .ripple {
+      position: absolute;
+      border-radius: 9999px;
+      background: rgba(31, 111, 235, 0.25);
+      transform: scale(0);
+      animation: ripple 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+    @keyframes glow-shift {
+      0%, 100% { background: radial-gradient(circle at center, #1F6FEB, #8A2BE2, transparent); }
+      50% { background: radial-gradient(circle at center, #FF00FF, #1F6FEB, transparent); }
+    }
+    .animate-glow-shift {
+      animation: glow-shift 8s infinite ease-in-out alternate;
+    }
+    .trail-dot {
+      animation: trailFade 0.3s ease-out forwards;
+    }
+    @keyframes trailFade {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(0.5); opacity: 0; }
+    }
+    #cursor {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      from, to { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    .perspective {
+      perspective: 1000px;
+    }
+
+    /* Scroll anchor offset so sticky nav doesn't cover headings */
+[id] { scroll-margin-top: 90px; }
+
+/* Marquee motion (respect reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-marquee { animation: marquee 18s linear infinite; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+/* Scroll-reveal base states */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+.reveal-up   { transform: translateY(16px); }
+.reveal-right{ transform: translateX(16px); }
+.reveal-left { transform: translateX(-16px); }
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+
+  :root{
+    --primary:#1F6FEB;
+    --accent:#58A6FF;
+    --silver:#C9D1D9;
+  }
+
+  /* glow colors (set by JS) */
+  #mouse-glow { background: radial-gradient(circle at center, rgba(31,111,235,0.35), rgba(138,43,226,0.18), transparent); }
+
+  /* ripple */
+  .ripple {
+    position: absolute;
+    border-radius: 9999px;
+    background: rgba(31,111,235,0.25);
+    transform: scale(0);
+    animation: ripple 0.6s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes ripple { to { transform: scale(3); opacity: 0; } }
+
+  /* trail dot */
+  .trail-dot { animation: trailFade 0.35s ease-out forwards; }
+  @keyframes trailFade { 0% { transform: scale(1); opacity: 0.9 } 100% { transform: scale(0.5); opacity: 0 } }
+
+  /* typing cursor (reduced) */
+  #cursor { opacity: 1; display:inline-block; margin-left:4px; }
+  /* reveal base */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* hover glitch class (if you kept it) */
+  .animate-glitch { animation: glitch .4s ease-in-out; }
+  @keyframes glitch { 0%{transform:none}20%{transform:translateX(2px) rotate(0.6deg)}40%{transform:translateX(-2px) rotate(-0.6deg)}60%{transform:translateX(1px) rotate(0.3deg)}80%{transform:none}100%{transform:none} }
+
+  /* reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .animate-glitch, #mouse-glow { transition: none !important; animation: none !important; }
+  }
+
+  /* mobile friendly sizes */
+  @media (max-width: 767px) {
+    #mouse-glow { display: none; }
+    .trail-dot { display: none; }
+  }
+
+/* Timeline layout */
+.timeline {
+  position: relative;
+  padding-left: 1.5rem; /* aligns with dot column */
+}
+
+/* the thin track */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.6rem; /* align with dot center */
+  top: 0.5rem;
+  width: 4px;
+  height: 100%;
+  background: rgba(255,255,255,0.04);
+  border-radius: 999px;
+  z-index: 0;
+}
+
+/* progress fill - grows from top */
+.timeline-progress {
+  position: absolute;
+  left: 0.6rem;
+  top: 0.5rem;
+  width: 4px;
+  height: 0%;
+  background: linear-gradient(180deg, #58A6FF 0%, #1F6FEB 100%);
+  border-radius: 999px;
+  z-index: 1;
+  transform-origin: top;
+  transition: height 300ms cubic-bezier(.2,.9,.2,1);
+  pointer-events: none;
+}
+
+/* item style */
+.timeline-item {
+  position: relative;
+  z-index: 2;
+  padding-left: 0.75rem;
+}
+
+/* dot */
+.timeline-dot {
+  position: absolute;
+  left: -0.5rem; /* center dot on track */
+  top: 0.35rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: #1F6FEB;
+  border: 2px solid rgba(255,255,255,0.06);
+  display: inline-block;
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease, background .28s ease;
+  z-index: 3;
+}
+
+/* active item */
+.timeline-item.active .timeline-dot {
+  transform: scale(1.25);
+  box-shadow: 0 8px 24px rgba(31,111,235,0.12);
+  background: linear-gradient(180deg, #58A6FF, #1F6FEB);
+}
+
+/* marquee animation (optional) */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-marquee { animation: marquee 18s linear infinite; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-progress, .timeline-dot, .animate-marquee { transition: none !important; animation: none !important; }
+}
+
+/* Carousel basics */
+.carousel-track {
+  transition: transform 450ms cubic-bezier(.2,.9,.2,1);
+}
+.carousel-slide { flex: 0 0 100%; } /* show 1 slide at a time */
+
+/* Make indicators obvious when active */
+.indicator[aria-pressed="true"] { background: linear-gradient(90deg,#58A6FF,#1F6FEB); box-shadow: 0 6px 16px rgba(31,111,235,0.12); }
+
+/* Reduce motion safety */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track { transition: none !important; }
+}
+
+
+  </style>
+  <style>
+    /* Custom styles for the portfolio page */
+    body {
+      background-color: #0D1117;
+      color: #C9D1D9;
+    }
+    h1, h2, h3 {
+      color: #58A6FF;
+    }
+    a {
+      color: #1F6FEB;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #58A6FF;
+      text-decoration: none;
+    }
+</style>
+</head>
+<body class="bg-[#0D1117] text-[#C9D1D9]">
+
+  <!-- NAVBAR — enhanced -->
+<nav id="main-nav" class="w-full sticky top-0 z-50 bg-[#0D1117] shadow-md" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="#home"
+           class="flex items-center gap-3 focus:outline-none"
+           aria-label="Code With Charles Home">
+          <!-- Prefer an inline SVG for crisp color control; fallback to PNG if you have one -->
+          <svg id="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="36" height="36" class="block" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#58A6FF"/>
+                <stop offset="1" stop-color="#1F6FEB"/>
+              </linearGradient>
+            </defs>
+            <rect rx="9" width="48" height="48" fill="url(#g1)"></rect>
+            <path d="M14 34V14l8 6 8-6v20" fill="none" stroke="#0D1117" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+          <span class="text-[#58A6FF] font-bold text-lg hidden sm:inline">Code With Charles</span>
+        </a>
+      </div>
+
+      <!-- Desktop Links -->
+      <div class="hidden md:flex items-center relative" role="menubar" aria-label="Primary navigation">
+        <div id="nav-links" class="flex items-center gap-6">
+          <a href="#home" data-link="home" class="nav-link" role="menuitem" tabindex="0">Home</a>
+          <a href="#about" data-link="about" class="nav-link" role="menuitem" tabindex="0">About</a>
+          <a href="#skills" data-link="skills" class="nav-link" role="menuitem" tabindex="0">Skills</a>
+          <a href="#services" data-link="services" class="nav-link" role="menuitem" tabindex="0">Services</a>
+          <a href="#portfolio" data-link="portfolio" class="nav-link" role="menuitem" tabindex="0">Portfolio</a>
+          <a href="#testimonials" data-link="testimonials" class="nav-link" role="menuitem" tabindex="0">Testimonials</a>
+          <a href="#contact" data-link="contact" class="nav-link" role="menuitem" tabindex="0">Contact</a>
+        </div>
+
+        <!-- moving underline -->
+        <span id="nav-underline" aria-hidden="true"></span>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <div class="md:hidden">
+        <button id="menu-btn" class="text-[#58A6FF] p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#1F6FEB]"
+                aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 space-y-2 bg-[#0D1117] transform-gpu -translate-y-2 opacity-0 transition-all duration-300" aria-hidden="true">
+    <a href="#home" data-link="home" class="nav-link block px-3 py-2 rounded-md">Home</a>
+    <a href="#about" data-link="about" class="nav-link block px-3 py-2 rounded-md">About</a>
+    <a href="#skills" data-link="skills" class="nav-link block px-3 py-2 rounded-md">Skills</a>
+    <a href="#services" data-link="services" class="nav-link block px-3 py-2 rounded-md">Services</a>
+    <a href="#portfolio" data-link="portfolio" class="nav-link block px-3 py-2 rounded-md">Portfolio</a>
+    <a href="#testimonials" data-link="testimonials" class="nav-link block px-3 py-2 rounded-md">Testimonials</a>
+    <a href="#contact" data-link="contact" class="nav-link block px-3 py-2 rounded-md">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO (replace existing) -->
+<section id="home"
+         class="relative overflow-hidden min-h-screen flex items-center justify-center px-6 py-20 bg-[#0D1117] text-[#C9D1D9]"
+         aria-labelledby="home-heading" >
+
+  <!-- decorative radial SVG (kept low opacity) -->
+  <svg class="absolute top-0 left-1/2 transform -translate-x-1/2 z-0 opacity-8 pointer-events-none" width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" aria-hidden="true">
+    <defs>
+      <radialGradient id="radialGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1F6FEB" />
+        <stop offset="100%" stop-color="#0D1117" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <circle cx="500" cy="500" r="400" fill="url(#radialGradient)" />
+  </svg>
+
+  <!-- mouse-following glow (positioned via JS) -->
+  <div id="mouse-glow" class="pointer-events-none absolute top-0 left-0 w-96 h-96 rounded-full opacity-0 blur-3xl z-0"
+       aria-hidden="true"></div>
+
+  <div class="max-w-6xl w-full grid md:grid-cols-2 gap-10 items-center z-10">
+    <!-- image column -->
+    <div class="flex justify-center md:justify-start">
+      <div class="relative group" style="width: 18rem; height: 18rem;">
+        <!-- layered glows -->
+        <div class="absolute -top-6 -left-6 w-72 h-72 rounded-full opacity-25 blur-3xl z-0 transform-gpu" aria-hidden="true"></div>
+        <div class="absolute -bottom-4 -right-4 w-72 h-72 rounded-full opacity-30 blur-3xl z-0 transform-gpu" aria-hidden="true"></div>
+
+        <!-- ripple container (for click ripples) -->
+        <span id="ripple-container" class="absolute inset-0 rounded-full overflow-hidden z-10 pointer-events-none" aria-hidden="true"></span>
+
+        <!-- profile image (keyboard accessible) -->
+        <img src="assets/profile.jpg"
+             srcset="assets/profile.jpg@2x.jpg 2x"
+             loading="lazy"
+             alt="Charles, Web Developer"
+             id="profileImage"
+             tabindex="0"
+             role="button"
+             aria-label="Charles — click or press Enter for a fun ripple"
+             class="relative z-20 rounded-full w-80 h-80 object-cover border-4 border-[#1F6FEB] shadow-xl transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-[#1F6FEB]/30" />
+      </div>
+    </div>
+
+    <!-- text column -->
+    <div class="text-center md:text-left">
+      <h1 id="home-heading" class="text-4xl md:text-6xl font-bold leading-tight mb-4 reveal reveal-up" style="color:var(--silver)">
+        Hi, I'm <span class="text-[#1F6FEB]">Charles</span><br />
+        <span id="typed-text" class="text-[#58A6FF]"></span><span id="cursor" class="text-[#58A6FF]">|</span>
+      </h1>
+
+      <p class="text-lg md:text-xl text-[#AAB8C2] mb-8 reveal reveal-up" style="transition-delay:120ms">
+      Turn your business into a brand with a website built to sell
+      </p>
+
+      <div class="flex flex-col sm:flex-row md:justify-start justify-center gap-4 reveal reveal-up" style="transition-delay:220ms">
+        <a href="#portfolio" class="px-6 py-3 rounded-lg bg-[#1F6FEB] text-white font-semibold hover:bg-[#58A6FF] transition duration-300">View My Work</a>
+        <a href="#contact" class="px-6 py-3 rounded-lg border border-[#1F6FEB] text-[#1F6FEB] font-semibold hover:bg-[#1F6FEB] hover:text-white transition duration-300">Let’s Talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- About Section (Enhanced + Scroll Reveal) -->
+<section id="about" class="relative bg-[#0D1117] text-[#C9D1D9] px-6 py-20 overflow-hidden" aria-labelledby="about-heading">
+  <!-- Soft decorative glow -->
+  <div aria-hidden="true" class="pointer-events-none absolute -top-32 -right-28 w-[520px] h-[520px] rounded-full blur-3xl opacity-20 bg-gradient-to-br from-[#1F6FEB] to-[#8A2BE2]"></div>
+
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+    <!-- Image card w/ layered glow -->
+    <div class="flex justify-center md:justify-start">
+      <div class="relative reveal reveal-right">
+        <div class="absolute -inset-3 rounded-2xl bg-gradient-to-tr from-[#1F6FEB]/40 to-[#8A2BE2]/40 blur-2xl opacity-50"></div>
+        <img src="assets/about-img.jpg" alt="Charles working on a project"
+             class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl border border-[#1F6FEB]/40 shadow-xl hover:scale-[1.02] transition" />
+        <!-- small corner badge -->
+        <div class="absolute bottom-3 left-3 text-xs px-2 py-1 rounded-md bg-[#0D1117]/70 border border-[#30363D] backdrop-blur">
+          Based in 🇳🇬
+        </div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="reveal reveal-up">
+      <p class="inline-flex items-center gap-2 text-xs tracking-widest uppercase text-[#58A6FF]/80 mb-3">
+        <span class="inline-block w-2 h-2 rounded-full bg-[#1F6FEB]"></span> About
+      </p>
+      <h2 id="about-heading" class="text-3xl md:text-4xl font-bold mb-4 font-poppins">
+        Hi, I’m <span class="text-[#58A6FF]">Charles</span> — I design & build clean, fast web experiences.
+      </h2>
+      <p class="text-[#AAB8C2] leading-relaxed mb-4">
+        I help small businesses and startups ship modern websites and web apps—polished UI, responsive by default, and optimized for growth.
+      </p>
+
+      <!-- Past / Present / Future with icons -->
+      <ul class="space-y-3 text-[#C9D1D9]/90">
+        <li class="flex gap-3">
+          <span class="shrink-0 mt-1 w-6 h-6 rounded-full grid place-items-center bg-white/5 border border-white/10">⌛</span>
+          <p><strong>Past:</strong> Taught myself HTML, CSS, and JS, prototyped relentlessly, and fell in love with clean UI.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="shrink-0 mt-1 w-6 h-6 rounded-full grid place-items-center bg-white/5 border border-white/10">⚡</span>
+          <p><strong>Present:</strong> Shipping performant, accessible interfaces with Tailwind, React, and modern tooling.</p>
+        </li>
+        <li class="flex gap-3">
+          <span class="shrink-0 mt-1 w-6 h-6 rounded-full grid place-items-center bg-white/5 border border-white/10">🚀</span>
+          <p><strong>Future:</strong> Collaborating on product teams, scaling design systems, and pushing front-end craft.</p>
+        </li>
+      </ul>
+
+      <!-- Tech chips -->
+      <div class="flex flex-wrap gap-2 mt-6">
+        <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">TailwindCSS</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">React</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">TypeScript</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Framer Motion</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Node</span>
+      </div>
+
+      <!-- CTA row -->
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <a href="#portfolio" class="px-5 py-3 rounded-lg bg-[#1F6FEB] hover:bg-[#58A6FF] text-white font-semibold transition">See Projects</a>
+        <a href="assets/Charles-CV.pdf" download class="px-5 py-3 rounded-lg border border-[#1F6FEB] text-[#1F6FEB] hover:bg-[#1F6FEB] hover:text-white font-semibold transition">Download CV</a>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Trust bar -->
+  <div class="max-w-6xl mx-auto mt-14">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-80">
+      <div class="h-10 grid place-items-center border border-[#30363D] rounded-lg text-xs">Fast Delivery</div>
+      <div class="h-10 grid place-items-center border border-[#30363D] rounded-lg text-xs">Mobile First</div>
+      <div class="h-10 grid place-items-center border border-[#30363D] rounded-lg text-xs">SEO Ready</div>
+      <div class="h-10 grid place-items-center border border-[#30363D] rounded-lg text-xs">Clean Code</div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats (counters) -->
+<section class="bg-[#0D1117] text-[#C9D1D9] px-6 pb-12 -mt-6">
+  <div class="max-w-6xl mx-auto grid sm:grid-cols-3 gap-6">
+    <div class="counter rounded-xl bg-[#161B22] border border-[#30363D] p-6 text-center reveal">
+      <div class="text-3xl font-bold"><span class="count" data-target="35">0</span>+</div>
+      <p class="text-sm text-[#AAB8C2] mt-1">Projects Delivered</p>
+    </div>
+    <div class="counter rounded-xl bg-[#161B22] border border-[#30363D] p-6 text-center reveal">
+      <div class="text-3xl font-bold"><span class="count" data-target="20">0</span>+</div>
+      <p class="text-sm text-[#AAB8C2] mt-1">Happy Clients</p>
+    </div>
+    <div class="counter rounded-xl bg-[#161B22] border border-[#30363D] p-6 text-center reveal">
+      <div class="text-3xl font-bold"><span class="count" data-target="4">0</span> yrs</div>
+      <p class="text-sm text-[#AAB8C2] mt-1">Experience</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Journey with animated vertical progress -->
+<section id="journey-section" class="bg-[#0D1117] text-[#C9D1D9] px-6 py-12">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-6 text-[#58A6FF]">Journey</h3>
+
+    <div class="grid md:grid-cols-2 gap-10 items-start">
+      <!-- Timeline column -->
+      <div>
+        <ol class="timeline relative ps-6" role="list" aria-label="Career journey timeline">
+          <!-- progress bar (filled by JS) -->
+          <div class="timeline-progress" aria-hidden="true"></div>
+
+          <li class="timeline-item mb-8">
+            <span class="timeline-dot" aria-hidden="true"> </span>
+            <p class="text-sm text-[#AAB8C2]">2019—2021</p>
+            <p class="font-medium">Learning & Prototyping</p>
+            <p class="text-[#AAB8C2] text-sm">Built mini projects, honed fundamentals, iterated fast.</p>
+          </li>
+
+          <li class="timeline-item mb-8">
+            <span class="timeline-dot" aria-hidden="true"> </span>
+            <p class="text-sm text-[#AAB8C2]">2022—Now</p>
+            <p class="font-medium">Client Work & Growth</p>
+            <p class="text-[#AAB8C2] text-sm">Delivering sleek, responsive sites for SMBs & startups.</p>
+          </li>
+
+          <li class="timeline-item mb-8">
+            <span class="timeline-dot" aria-hidden="true"> </span>
+            <p class="text-sm text-[#AAB8C2]">Next</p>
+            <p class="font-medium">Scaling Product Craft</p>
+            <p class="text-[#AAB8C2] text-sm">Design systems, accessibility, performance at scale.</p>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Marquee tech strip -->
+      <div class="relative overflow-hidden rounded-xl border border-[#30363D] bg-[#0D1117] reveal reveal-right">
+        <div class="flex items-center gap-8 py-6 animate-marquee whitespace-nowrap">
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Next.js</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Vite</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">GSAP</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Supabase</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Stripe</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Sanity</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Cloudflare</span>
+          <!-- duplicate for seamless loop -->
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Next.js</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Vite</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">GSAP</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Supabase</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Stripe</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Sanity</span>
+          <span class="px-3 py-1 text-xs rounded-full bg-[#161B22] border border-[#30363D]">Cloudflare</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Transformation: Before / After + CTA -->
+<section id="transformation" class="bg-[#0D1117] text-[#C9D1D9] px-6 py-12">
+  <div class="max-w-6xl mx-auto">
+    <div class="bg-[#111319] border border-[#23272b] rounded-2xl p-6 md:p-10 shadow-lg">
+      <div class="grid md:grid-cols-2 gap-6 items-start">
+        <!-- Left: headline + CTA -->
+        <div class="flex flex-col justify-between">
+          <div>
+            <p class="text-sm uppercase tracking-wider text-[#58A6FF]/80 mb-2">Transformation</p>
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 font-poppins">From struggling to thriving — what your business looks like after a site that sells</h2>
+
+            <!-- Before / After -->
+            <div class="grid sm:grid-cols-2 gap-6 mt-4">
+              <!-- Before -->
+              <div>
+                <h3 class="text-sm font-semibold text-[#FFB4C0] mb-2">Before</h3>
+                <ul class="text-sm text-[#AAB8C2] space-y-2 list-disc list-inside">
+                  <li>Rely on word-of-mouth or posts that rarely convert.</li>
+                  <li>Embarrassed when asked, “Do you have a website?”</li>
+                  <li>Lose credibility vs competitors with polished sites.</li>
+                  <li>Spend hours explaining prices and services over phone.</li>
+                  <li>Sales unpredictable; growth stuck at a plateau.</li>
+                </ul>
+              </div>
+
+              <!-- After -->
+              <div>
+                <h3 class="text-sm font-semibold text-[#8BF1A1] mb-2">After</h3>
+                <ul class="text-sm text-[#AAB8C2] space-y-2 list-disc list-inside">
+                  <li>Sleek website that instantly builds <strong>trust & credibility</strong>.</li>
+                  <li>Customers find you on Google and buy or book online.</li>
+                  <li>Your site becomes a <strong>24/7 sales machine</strong>.</li>
+                  <li>Save time — the website answers FAQs and shows pricing.</li>
+                  <li>Consistent sales and new growth opportunities — finally scale.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-6">
+            <!-- If you have a contact modal, replace href with data-open or JS hook -->
+            <a href="#contact"
+               class="inline-flex items-center gap-3 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-5 py-3 rounded-lg font-semibold transition-shadow shadow-md focus:outline-none focus:ring-4 focus:ring-[#1F6FEB]/25"
+               aria-label="Start a project — contact Code With Charles">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+              Let’s build a site that sells
+            </a>
+
+            <p class="text-xs text-[#7f8b95] mt-3">
+              Free discovery call — we focus on results (sales, clarity, growth).
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: social proof / quick metrics -->
+        <div class="border-l md:border-l-2 border-transparent md:border-[#1a2228] pl-0 md:pl-8">
+          <div class="grid gap-4">
+            <div class="bg-[#0f1418] p-4 rounded-lg border border-[#22272b]">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm text-[#AAB8C2]">Projects Delivered</p>
+                  <p class="text-2xl font-bold text-[#58A6FF]">35+</p>
+                </div>
+                <div class="text-xs text-[#7f8b95]">Reliable, fast builds</div>
+              </div>
+            </div>
+
+            <div class="bg-[#0f1418] p-4 rounded-lg border border-[#22272b]">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm text-[#AAB8C2]">Happy Clients</p>
+                  <p class="text-2xl font-bold text-[#8BF1A1]">20+</p>
+                </div>
+                <div class="text-xs text-[#7f8b95]">Small businesses first</div>
+              </div>
+            </div>
+
+            <div class="bg-[#0f1418] p-4 rounded-lg border border-[#22272b]">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm text-[#AAB8C2]">Average Sales Lift</p>
+                  <p class="text-2xl font-bold text-[#FFD580]">+28%</p>
+                </div>
+                <div class="text-xs text-[#7f8b95]">Measured after launch</div>
+              </div>
+            </div>
+
+            <!-- small testimonial snippet -->
+            <blockquote class="mt-4 p-4 bg-[#0d1417] border border-[#22272b] rounded-lg text-sm text-[#AAB8C2]">
+              “Charles turned our site into a selling machine — bookings jumped in weeks.” 
+              <cite class="block mt-2 text-xs text-[#7f8b95]">— Amina, Shop Owner</cite>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-20 bg-[#0D1117] text-[#C9D1D9]" aria-labelledby="skills-heading">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 id="skills-heading" class="text-3xl md:text-4xl font-bold text-center mb-12">My Skills</h2>
+      <div class="space-y-14">
+        <div>
+          <h3 class="text-2xl font-semibold mb-6">Frontend</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="skill">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML icon" class="w-6 h-6">
+                <span class="font-semibold">HTML</span>
+              </div>
+              <div class="w-full bg-[#1C1C1C] rounded-full h-3">
+                <div class="progress bg-[#1F6FEB] h-3 rounded-full transition-all duration-1000 ease-in-out" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS icon" class="w-6 h-6">
+                <span class="font-semibold">CSS / TailwindCSS</span>
+              </div>
+              <div class="w-full bg-[#1C1C1C] rounded-full h-3">
+                <div class="progress bg-[#58A6FF] h-3 rounded-full transition-all duration-1000 ease-in-out" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript icon" class="w-6 h-6">
+                <span class="font-semibold">JavaScript</span>
+              </div>
+              <div class="w-full bg-[#1C1C1C] rounded-full h-3">
+                <div class="progress bg-[#FF3C38] h-3 rounded-full transition-all duration-1000 ease-in-out" data-width="85%"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap icon" class="w-6 h-6">
+                <span class="font-semibold">Responsive Design</span>
+              </div>
+              <div class="w-full bg-[#1C1C1C] rounded-full h-3">
+                <div class="progress bg-[#00FF85] h-3 rounded-full transition-all duration-1000 ease-in-out" data-width="95%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-semibold mb-6">Tools & Version Control</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="skill">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git icon" class="w-6 h-6">
+                <span class="font-semibold">Git & GitHub</span>
+              </div>
+              <div class="w-full bg-[#1C1C1C] rounded-full h-3">
+                <div class="progress bg-[#C9D1D9] h-3 rounded-full transition-all duration-1000 ease-in-out" data-width="80%"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="flex items-center gap-3 mb-2">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma icon" class="w-6 h-6">
+                <span class="font-semibold">UI/UX Design (Figma)</span>
+              </div>
+              <div class="w-full bg-[#1C1C1C] rounded-full h-3">
+                <div class="progress bg-[#1F6FEB] h-3 rounded-full transition-all duration-1000 ease-in-out" data-width="70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Services (Conversion-Focused) -->
+<section id="services" class="bg-[#0D1117] text-[#C9D1D9] px-6 py-16" aria-labelledby="services-heading">
+  <div class="max-w-6xl mx-auto">
+    <!-- Headline -->
+    <div class="text-center mb-10">
+      <p class="text-xs uppercase tracking-wider text-[#58A6FF]/80">Services</p>
+      <h2 id="services-heading" class="text-3xl md:text-4xl font-bold mt-2">Websites that boost sales and trust</h2>
+      <p class="text-[#AAB8C2] mt-3 max-w-2xl mx-auto">
+        Clear packages for small businesses—fast delivery, measurable results, zero fluff.
+      </p>
+    </div>
+
+    <!-- Trust bar -->
+    <div class="flex flex-wrap items-center justify-center gap-3 text-xs text-[#AAB8C2] mb-8">
+      <span class="px-3 py-1 rounded-full border border-[#2B3137] bg-[#111319]">Mobile-first</span>
+      <span class="px-3 py-1 rounded-full border border-[#2B3137] bg-[#111319]">SEO-ready</span>
+      <span class="px-3 py-1 rounded-full border border-[#2B3137] bg-[#111319]">Fast & Secure</span>
+      <span class="px-3 py-1 rounded-full border border-[#2B3137] bg-[#111319]">Simple Editing</span>
+      <span class="px-3 py-1 rounded-full border border-[#2B3137] bg-[#111319]">Friendly Support</span>
+    </div>
+
+    <!-- Packages -->
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Starter Site -->
+      <article class="group relative rounded-2xl border border-[#23272b] bg-[#111319] p-6 shadow-lg hover:shadow-xl transition">
+        <div class="absolute -top-3 -right-3 px-2 py-1 text-[10px] rounded bg-[#1F6FEB] text-white/90 shadow hidden md:block">Best Value</div>
+        <header class="mb-5">
+          <h3 class="text-xl font-semibold">Starter Site</h3>
+          <p class="text-sm text-[#AAB8C2] mt-1">Launch a credible, conversion-ready site fast.</p>
+        </header>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Up to 5 pages (Home, About, Services, Contact, FAQs)</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Copy guidance + on-brand visuals</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Speed + SEO fundamentals</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Contact form + basic analytics</li>
+        </ul>
+        <div class="mt-5 flex items-center justify-between">
+          <p class="text-sm text-[#AAB8C2]">Typical timeline: <span class="text-white font-medium">7–10 days</span></p>
+          <p class="text-lg font-bold text-[#8BF1A1]">Budget-friendly</p>
+        </div>
+        <button data-cta="starter" class="mt-5 w-full inline-flex items-center justify-center gap-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2.5 rounded-lg font-semibold transition focus:outline-none focus:ring-4 focus:ring-[#1F6FEB]/30">
+          Get Starter
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <details class="mt-3 text-sm text-[#AAB8C2] open:animate-[fadeIn_.2s_ease]">
+          <summary class="cursor-pointer select-none text-[#58A6FF]">What you get</summary>
+          <ul class="mt-2 space-y-1 list-disc list-inside">
+            <li>Brand-aligned design & messaging</li>
+            <li>Legal pages templates (Privacy/Terms)</li>
+            <li>Hand-off video + simple editor training</li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- Growth Site (Most Popular) -->
+      <article class="group relative rounded-2xl border border-[#2f3540] bg-[#0f1418] p-6 shadow-xl ring-1 ring-[#1F6FEB]/20">
+        <div class="absolute -top-3 -right-3 px-2 py-1 text-[10px] rounded bg-[#58A6FF] text-white/90 shadow">Most Popular</div>
+        <header class="mb-5">
+          <h3 class="text-xl font-semibold">Growth Site</h3>
+          <p class="text-sm text-[#AAB8C2] mt-1">Designed to convert—track, test, and scale.</p>
+        </header>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#1F6FEB]"></span>Everything in Starter, plus:</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#1F6FEB]"></span>Lead capture + CRM or email integration</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#1F6FEB]"></span>Landing pages for campaigns</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#1F6FEB]"></span>Conversion tracking & heatmaps setup</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#1F6FEB]"></span>A/B test ready sections</li>
+        </ul>
+        <div class="mt-5 flex items-center justify-between">
+          <p class="text-sm text-[#AAB8C2]">Typical timeline: <span class="text-white font-medium">2–3 weeks</span></p>
+          <p class="text-lg font-bold text-[#8BF1A1]">Best ROI</p>
+        </div>
+        <button data-cta="growth" class="mt-5 w-full inline-flex items-center justify-center gap-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2.5 rounded-lg font-semibold transition focus:outline-none focus:ring-4 focus:ring-[#1F6FEB]/30">
+          Get Growth
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <details class="mt-3 text-sm text-[#AAB8C2] open:animate-[fadeIn_.2s_ease]">
+          <summary class="cursor-pointer select-none text-[#58A6FF]">What you get</summary>
+          <ul class="mt-2 space-y-1 list-disc list-inside">
+            <li>Sales-first wireframes and copy tweaks</li>
+            <li>Schema/metadata for better Google visibility</li>
+            <li>Quarterly optimization check-in (optional)</li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- Custom Web App -->
+      <article class="group relative rounded-2xl border border-[#23272b] bg-[#111319] p-6 shadow-lg hover:shadow-xl transition">
+        <header class="mb-5">
+          <h3 class="text-xl font-semibold">Custom Web App</h3>
+          <p class="text-sm text-[#AAB8C2] mt-1">Automate, manage, and scale with custom features.</p>
+        </header>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Bookings, memberships, dashboards</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>API integrations & secure auth</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Scalable architecture & performance</li>
+          <li class="flex items-start gap-2"><span class="mt-1 h-1.5 w-1.5 rounded-full bg-[#58A6FF]"></span>Dedicated roadmap & support</li>
+        </ul>
+        <div class="mt-5 flex items-center justify-between">
+          <p class="text-sm text-[#AAB8C2]">Typical timeline: <span class="text-white font-medium">4–8+ weeks</span></p>
+          <p class="text-lg font-bold text-[#FFD580]">Tailored</p>
+        </div>
+        <button data-cta="custom" class="mt-5 w-full inline-flex items-center justify-center gap-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2.5 rounded-lg font-semibold transition focus:outline-none focus:ring-4 focus:ring-[#1F6FEB]/30">
+          Plan Your App
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <details class="mt-3 text-sm text-[#AAB8C2] open:animate-[fadeIn_.2s_ease]">
+          <summary class="cursor-pointer select-none text-[#58A6FF]">What you get</summary>
+          <ul class="mt-2 space-y-1 list-disc list-inside">
+            <li>User flows, prototypes, and testing</li>
+            <li>Performance budgets & monitoring</li>
+            <li>Training for your team</li>
+          </ul>
+        </details>
+      </article>
+    </div>
+
+    <!-- Process -->
+    <div class="mt-12 grid md:grid-cols-4 gap-4">
+      <div class="rounded-xl border border-[#23272b] bg-[#111319] p-4">
+        <p class="text-xs text-[#58A6FF]/80 uppercase tracking-wider">Step 1</p>
+        <h4 class="font-semibold mt-1">Discovery Call</h4>
+        <p class="text-sm text-[#AAB8C2] mt-1">We map goals, audience, and must-haves.</p>
+      </div>
+      <div class="rounded-xl border border-[#23272b] bg-[#111319] p-4">
+        <p class="text-xs text-[#58A6FF]/80 uppercase tracking-wider">Step 2</p>
+        <h4 class="font-semibold mt-1">Sales-First Wireframe</h4>
+        <p class="text-sm text-[#AAB8C2] mt-1">Clarity, trust, and conversion paths first.</p>
+      </div>
+      <div class="rounded-xl border border-[#23272b] bg-[#111319] p-4">
+        <p class="text-xs text-[#58A6FF]/80 uppercase tracking-wider">Step 3</p>
+        <h4 class="font-semibold mt-1">Design & Build</h4>
+        <p class="text-sm text-[#AAB8C2] mt-1">Pixel-perfect UI, fast, SEO-ready.</p>
+      </div>
+      <div class="rounded-xl border border-[#23272b] bg-[#111319] p-4">
+        <p class="text-xs text-[#58A6FF]/80 uppercase tracking-wider">Step 4</p>
+        <h4 class="font-semibold mt-1">Launch & Support</h4>
+        <p class="text-sm text-[#AAB8C2] mt-1">Training + analytics to keep improving.</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-10">
+      <a href="#contact" class="inline-flex items-center gap-3 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-6 py-3 rounded-lg font-semibold transition focus:outline-none focus:ring-4 focus:ring-[#1F6FEB]/25">
+        Book a free discovery call
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="text-xs text-[#AAB8C2] mt-3">No pressure. Clear next steps in 20 minutes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="max-w-6xl mx-auto px-6 py-16 text-white">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl font-bold text-[#58A6FF]">Projects That Drive Results</h2>
+    <p class="text-[#AAB8C2] mt-2">See how we helped businesses grow online</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Project Card 1 -->
+    <article class="bg-[#161B22] rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition-transform">
+      <img src="assets/projects/bakery-cover.jpg" alt="Bakery Website" class="w-full h-40 object-cover" loading="lazy">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">SweetTreats Bakery</h3>
+        <p class="text-sm text-[#AAB8C2] mb-4">
+          Local bakery boosted sales by 40% with online ordering and SEO.
+        </p>
+        <button class="text-[#58A6FF] font-medium hover:underline focus:outline-none"
+                data-modal-open="case-bakery" aria-haspopup="dialog" aria-controls="case-bakery">
+          View Case Study →
+        </button>
+      </div>
+    </article>
+
+    <!-- Project Card 2 -->
+    <article class="bg-[#161B22] rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition-transform">
+      <img src="assets/projects/consulting-cover.jpg" alt="Consulting Website" class="w-full h-40 object-cover" loading="lazy">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">Prime Consulting</h3>
+        <p class="text-sm text-[#AAB8C2] mb-4">
+          Elevated credibility and improved lead quality with authority-focused site.
+        </p>
+        <button class="text-[#58A6FF] font-medium hover:underline focus:outline-none"
+                data-modal-open="case-consulting" aria-haspopup="dialog" aria-controls="case-consulting">
+          View Case Study →
+        </button>
+      </div>
+    </article>
+
+    <!-- Project Card 3 -->
+    <article class="bg-[#161B22] rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition-transform">
+      <img src="assets/projects/fashion-cover.jpg" alt="Clothing Store Website" class="w-full h-40 object-cover" loading="lazy">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold mb-2">UrbanWear</h3>
+        <p class="text-sm text-[#AAB8C2] mb-4">
+          Revamped e-commerce UX doubled conversions with faster checkout.
+        </p>
+        <button class="text-[#58A6FF] font-medium hover:underline focus:outline-none"
+                data-modal-open="case-fashion" aria-haspopup="dialog" aria-controls="case-fashion">
+          View Case Study →
+        </button>
+      </div>
+    </article>
+  </div>
+
+  <!-- Primary CTA -->
+  <div class="text-center mt-12">
+    <a href="#contact" class="px-6 py-3 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white rounded-xl shadow-lg transition">
+      Start Your Project
+    </a>
+  </div>
+</section>
+
+<!-- Case Study Modal: SweetTreats Bakery -->
+<div id="case-bakery" class="modal fixed inset-0 z-[999] hidden" aria-hidden="true" role="dialog" aria-labelledby="case-bakery-title" aria-modal="true">
+  <div class="modal-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+  <div class="modal-panel relative mx-auto my-10 w-[min(92vw,720px)] rounded-2xl bg-[#0E1318] border border-[#23272b] shadow-2xl
+              opacity-0 translate-y-4 scale-[.98] transition-all duration-200">
+    <header class="flex items-center justify-between p-5 border-b border-[#1a2228]">
+      <h3 id="case-bakery-title" class="text-xl font-semibold">SweetTreats Bakery — +40% Sales</h3>
+      <button class="modal-close p-2 rounded hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#1F6FEB]" aria-label="Close modal">
+        ✕
+      </button>
+    </header>
+
+    <div class="p-5 grid md:grid-cols-2 gap-5">
+      <img src="assets/projects/bakery-hero.jpg" alt="SweetTreats website preview" class="rounded-lg border border-[#22272b] object-cover w-full h-40 md:h-full" loading="lazy">
+      <div class="space-y-3 text-sm text-[#AAB8C2]">
+        <p><span class="text-white font-medium">Client:</span> Local artisan bakery</p>
+        <p><span class="text-white font-medium">Problem:</span> No online ordering, low local search visibility.</p>
+        <p><span class="text-white font-medium">Solution:</span> Mobile-first site, online menu & ordering, local SEO schema.</p>
+        <ul class="mt-2 space-y-2">
+          <li>• Online orders up <strong>40%</strong> in 8 weeks</li>
+          <li>• Average order value +12%</li>
+          <li>• Top-3 in “bakery near me” locally</li>
+        </ul>
+        <a href="#contact" class="inline-flex items-center gap-2 mt-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2 rounded-lg font-semibold">
+          Start a similar project
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Case Study Modal: Prime Consulting -->
+<div id="case-consulting" class="modal fixed inset-0 z-[999] hidden" aria-hidden="true" role="dialog" aria-labelledby="case-consulting-title" aria-modal="true">
+  <div class="modal-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+  <div class="modal-panel relative mx-auto my-10 w-[min(92vw,720px)] rounded-2xl bg-[#0E1318] border border-[#23272b] shadow-2xl
+              opacity-0 translate-y-4 scale-[.98] transition-all duration-200">
+    <header class="flex items-center justify-between p-5 border-b border-[#1a2228]">
+      <h3 id="case-consulting-title" class="text-xl font-semibold">Prime Consulting — Authority & Leads</h3>
+      <button class="modal-close p-2 rounded hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#1F6FEB]" aria-label="Close modal">✕</button>
+    </header>
+
+    <div class="p-5 grid md:grid-cols-2 gap-5">
+      <img src="assets/projects/consulting-hero.jpg" alt="Consulting site preview" class="rounded-lg border border-[#22272b] object-cover w-full h-40 md:h-full" loading="lazy">
+      <div class="space-y-3 text-sm text-[#AAB8C2]">
+        <p><span class="text-white font-medium">Client:</span> Boutique consulting firm</p>
+        <p><span class="text-white font-medium">Problem:</span> Looked small; struggled to win higher-ticket leads.</p>
+        <p><span class="text-white font-medium">Solution:</span> Authority messaging, case snippets, clear services & booking.</p>
+        <ul class="mt-2 space-y-2">
+          <li>• Qualified leads +31% in 60 days</li>
+          <li>• Discovery calls doubled</li>
+          <li>• Clearer positioning vs competitors</li>
+        </ul>
+        <a href="#contact" class="inline-flex items-center gap-2 mt-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2 rounded-lg font-semibold">
+          Get results like this
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Case Study Modal: UrbanWear -->
+<div id="case-fashion" class="modal fixed inset-0 z-[999] hidden" aria-hidden="true" role="dialog" aria-labelledby="case-fashion-title" aria-modal="true">
+  <div class="modal-backdrop absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+  <div class="modal-panel relative mx-auto my-10 w-[min(92vw,720px)] rounded-2xl bg-[#0E1318] border border-[#23272b] shadow-2xl
+              opacity-0 translate-y-4 scale-[.98] transition-all duration-200">
+    <header class="flex items-center justify-between p-5 border-b border-[#1F6FEB]/10">
+      <h3 id="case-fashion-title" class="text-xl font-semibold">UrbanWear — 2× Conversions</h3>
+      <button class="modal-close p-2 rounded hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#1F6FEB]" aria-label="Close modal">✕</button>
+    </header>
+
+    <div class="p-5 grid md:grid-cols-2 gap-5">
+      <img src="assets/projects/fashion-hero.jpg" alt="UrbanWear site preview" class="rounded-lg border border-[#22272b] object-cover w-full h-40 md:h-full" loading="lazy">
+      <div class="space-y-3 text-sm text-[#AAB8C2]">
+        <p><span class="text-white font-medium">Client:</span> Streetwear e-commerce</p>
+        <p><span class="text-white font-medium">Problem:</span> Cart abandonment & slow checkout.</p>
+        <p><span class="text-white font-medium">Solution:</span> Faster PDP, simplified checkout, trust badges, reviews.</p>
+        <ul class="mt-2 space-y-2">
+          <li>• Conversion rate ×2 after redesign</li>
+          <li>• Checkout time −35%</li>
+          <li>• Repeat customers +18%</li>
+        </ul>
+        <a href="#contact" class="inline-flex items-center gap-2 mt-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2 rounded-lg font-semibold">
+          Improve my store
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-20 bg-[#0D1117] text-[#C9D1D9]" aria-labelledby="portfolio-heading">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 id="portfolio-heading" class="text-3xl md:text-4xl font-bold text-center mb-12">My Projects</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div data-aos="fade-up" data-aos-delay="100" class="relative group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <img src="assets/codewear-home.png" alt="E-Commerce Site" class="w-full h-52 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center text-center p-4">
+            <h3 class="text-xl font-semibold mb-2">E-Commerce Site</h3>
+            <p class="text-sm text-gray-300 mb-4">A modern, mobile-friendly store built with HTML, TailwindCSS, and JavaScript.</p>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-5 h-5" alt="HTML icon">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5" alt="JavaScript icon">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="w-5 h-5" alt="TailwindCSS icon">
+            </div>
+            <div class="flex gap-4">
+              <a href="#" target="_blank" class="px-4 py-2 text-sm bg-[#1F6FEB] hover:bg-[#58A6FF] rounded-lg transition" aria-label="View E-Commerce Site Live">Live</a>
+              <a href="#" target="_blank" class="px-4 py-2 text-sm border border-[#C9D1D9] rounded-lg hover:bg-[#C9D1D9] hover:text-black transition" aria-label="View E-Commerce Site Code">Code</a>
+            </div>
+          </div>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200" class="relative group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <img src="https://source.unsplash.com/300x200/?dashboard" alt="Dashboard App" class="w-full h-52 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center text-center p-4">
+            <h3 class="text-xl font-semibold mb-2">Dashboard App</h3>
+            <p class="text-sm text-gray-300 mb-4">A responsive admin dashboard with real-time data visualization using React and Chart.js.</p>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="w-5 h-5" alt="React icon">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5" alt="JavaScript icon">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="w-5 h-5" alt="TailwindCSS icon">
+            </div>
+            <div class="flex gap-4">
+              <a href="#" target="_blank" class="px-4 py-2 text-sm bg-[#1F6FEB] hover:bg-[#58A6FF] rounded-lg transition" aria-label="View Dashboard App Live">Live</a>
+              <a href="#" target="_blank" class="px-4 py-2 text-sm border border-[#C9D1D9] rounded-lg hover:bg-[#C9D1D9] hover:text-black transition" aria-label="View Dashboard App Code">Code</a>
+            </div>
+          </div>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="300" class="relative group bg-[#1C1C1C] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <img src="https://source.unsplash.com/300x200/?portfolio" alt="Portfolio Website" class="w-full h-52 object-cover transform group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-center items-center text-center p-4">
+            <h3 class="text-xl font-semibold mb-2">Portfolio Website</h3>
+            <p class="text-sm text-gray-300 mb-4">A sleek personal portfolio showcasing my projects with animations and responsive design.</p>
+            <div class="flex items-center gap-3 mb-4">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-5 h-5" alt="HTML icon">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" class="w-5 h-5" alt="CSS icon">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5" alt="JavaScript icon">
+            </div>
+            <div class="flex gap-4">
+              <a href="#" target="_blank" class="px-4 py-2 text-sm bg-[#1F6FEB] hover:bg-[#58A6FF] rounded-lg transition" aria-label="View Portfolio Website Live">Live</a>
+              <a href="#" target="_blank" class="px-4 py-2 text-sm border border-[#C9D1D9] rounded-lg hover:bg-[#C9D1D9] hover:text-black transition" aria-label="View Portfolio Website Code">Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Testimonials Carousel -->
+<section id="testimonials" class="bg-[#0D1117] text-[#C9D1D9] px-6 py-16" aria-labelledby="testimonials-heading">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-8">
+      <p class="text-xs uppercase tracking-wider text-[#58A6FF]/80">Testimonials</p>
+      <h2 id="testimonials-heading" class="text-3xl md:text-4xl font-bold mt-2 text-[#58A6FF]">What small business owners say</h2>
+      <p class="text-[#AAB8C2] mt-3">Real results from real businesses — concise, honest, and measurable.</p>
+    </div>
+
+    <div class="relative">
+      <!-- Carousel viewport -->
+      <div class="relative overflow-hidden rounded-2xl" id="testimonials-carousel" role="region" aria-roledescription="carousel" aria-label="Client testimonials carousel">
+        <div class="carousel-track flex will-change-transform" data-index="0">
+          <!-- Slide 1 -->
+          <article class="carousel-slide min-w-full p-6 md:p-10" role="group" aria-roledescription="slide" aria-label="Slide 1 of 4">
+            <div class="bg-[#0F1418] border border-[#22272b] rounded-xl p-6 md:p-8 shadow-lg">
+              <div class="flex gap-4 items-start">
+                <img src="assets/testimonial-amina.jpg" alt="Amina — Shop Owner" class="w-14 h-14 rounded-full object-cover border border-[#1F6FEB]" loading="lazy">
+                <div class="flex-1">
+                  <p class="text-lg md:text-xl font-semibold">“Charles turned our site into a selling machine — bookings jumped in weeks.”</p>
+                  <div class="mt-3 text-sm text-[#AAB8C2]">Amina — Owner, SweetTreats Bakery</div>
+                  <div class="mt-3 text-xs text-[#7f8b95]">Sales +40% in 8 weeks • Online orders increased dramatically</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Slide 2 -->
+          <article class="carousel-slide min-w-full p-6 md:p-10" role="group" aria-roledescription="slide" aria-label="Slide 2 of 4">
+            <div class="bg-[#0F1418] border border-[#22272b] rounded-xl p-6 md:p-8 shadow-lg">
+              <div class="flex gap-4 items-start">
+                <img src="assets/testimonial-john.jpg" alt="John — Consultant" class="w-14 h-14 rounded-full object-cover border border-[#1F6FEB]" loading="lazy">
+                <div class="flex-1">
+                  <p class="text-lg md:text-xl font-semibold">“Our new site helped us land higher-ticket clients — discovery calls doubled.”</p>
+                  <div class="mt-3 text-sm text-[#AAB8C2]">John — Founder, Prime Consulting</div>
+                  <div class="mt-3 text-xs text-[#7f8b95]">Lead quality +31% • More booked consultations</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Slide 3 -->
+          <article class="carousel-slide min-w-full p-6 md:p-10" role="group" aria-roledescription="slide" aria-label="Slide 3 of 4">
+            <div class="bg-[#0F1418] border border-[#22272b] rounded-xl p-6 md:p-8 shadow-lg">
+              <div class="flex gap-4 items-start">
+                <img src="assets/testimonial-sara.jpg" alt="Sara — Founder" class="w-14 h-14 rounded-full object-cover border border-[#1F6FEB]" loading="lazy">
+                <div class="flex-1">
+                  <p class="text-lg md:text-xl font-semibold">“Our online store doubled conversions after the UX improvements.”</p>
+                  <div class="mt-3 text-sm text-[#AAB8C2]">Sara — CEO, UrbanWear</div>
+                  <div class="mt-3 text-xs text-[#7f8b95]">Conversion ×2 • Checkout time −35%</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Slide 4 -->
+          <article class="carousel-slide min-w-full p-6 md:p-10" role="group" aria-roledescription="slide" aria-label="Slide 4 of 4">
+            <div class="bg-[#0F1418] border border-[#22272b] rounded-xl p-6 md:p-8 shadow-lg">
+              <div class="flex gap-4 items-start">
+                <img src="assets/testimonial-kevin.jpg" alt="Kevin — Restaurant Owner" class="w-14 h-14 rounded-full object-cover border border-[#1F6FEB]" loading="lazy">
+                <div class="flex-1">
+                  <p class="text-lg md:text-xl font-semibold">“Fast, friendly, and focused on results — our bookings never looked better.”</p>
+                  <div class="mt-3 text-sm text-[#AAB8C2]">Kevin — Owner, Harbor Grill</div>
+                  <div class="mt-3 text-xs text-[#7f8b95]">Bookings +22% • Better mobile experience</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="mt-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <button class="testimonial-prev inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#111319] border border-[#22272b] hover:bg-[#171b20] focus:ring-2 focus:ring-[#1F6FEB]" aria-label="Previous testimonial">
+            ‹
+          </button>
+          <button class="testimonial-next inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#111319] border border-[#22272b] hover:bg-[#171b20] focus:ring-2 focus:ring-[#1F6FEB]" aria-label="Next testimonial">
+            ›
+          </button>
+        </div>
+
+        <!-- Indicators -->
+        <div class="flex items-center gap-2" role="tablist" aria-label="Testimonials">
+          <button class="indicator w-2 h-2 rounded-full bg-[#2b3137] border border-[#1f2a33]" data-index="0" aria-label="Go to testimonial 1" aria-pressed="false"></button>
+          <button class="indicator w-2 h-2 rounded-full bg-[#2b3137] border border-[#1f2a33]" data-index="1" aria-label="Go to testimonial 2" aria-pressed="false"></button>
+          <button class="indicator w-2 h-2 rounded-full bg-[#2b3137] border border-[#1f2a33]" data-index="2" aria-label="Go to testimonial 3" aria-pressed="false"></button>
+          <button class="indicator w-2 h-2 rounded-full bg-[#2b3137] border border-[#1f2a33]" data-index="3" aria-label="Go to testimonial 4" aria-pressed="false"></button>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-right">
+          <a href="#contact" class="inline-flex items-center gap-2 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white px-4 py-2 rounded-lg font-semibold transition">
+            Start your project
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-[#0D1117] text-[#C9D1D9] px-4 sm:px-6 lg:px-8" aria-labelledby="contact-heading">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
+        <div>
+          <h2 id="contact-heading" class="text-3xl sm:text-4xl font-bold text-[#58A6FF] mb-3 font-poppins">Let's build something awesome</h2>
+          <p class="mb-6 sm:mb-8 text-sm sm:text-base text-[#A3A3A3] font-inter leading-relaxed">
+            Have a project or just want to say hello? Drop a message or reach out via socials.
+          </p>
+          <div id="contact-status" class="text-green-400 text-sm hidden text-center mb-4">Message sent successfully! ✅</div>
+          <form id="contact-form" class="grid gap-4 sm:gap-5 font-inter">
+            <input type="text" id="name" placeholder="Your Name" required class="p-3 sm:p-4 text-sm bg-[#161B22] border border-[#30363D] rounded focus:ring-[#1F6FEB] transition" />
+            <input type="email" id="email" placeholder="Your Email" required class="p-3 sm:p-4 text-sm bg-[#161B22] border border-[#30363D] rounded focus:ring-[#1F6FEB] transition" />
+            <input type="text" id="subject" placeholder="Subject" required class="p-3 sm:p-4 text-sm bg-[#161B22] border border-[#30363D] rounded focus:ring-[#1F6FEB] transition" />
+            <textarea id="message" rows="4" placeholder="Your Message" required class="p-3 sm:p-4 text-sm bg-[#161B22] border border-[#30363D] rounded resize-none focus:ring-[#1F6FEB] transition"></textarea>
+            <button type="submit" class="bg-[#1F6FEB] hover:bg-[#58A6FF] text-white py-3 text-sm sm:text-base px-5 rounded font-semibold transition">Send Message</button>
+          </form>
+          <div class="mt-6 flex gap-5">
+            <a href="mailto:yourname@example.com" class="hover:scale-110 transition" title="Email Charles" aria-label="Email Charles">
+              <i data-lucide="mail" class="w-5 h-5 sm:w-6 sm:h-6 text-[#58A6FF]"></i>
+            </a>
+            <a href="https://wa.me/234XXXXXXXXXX" target="_blank" class="hover:scale-110 transition" title="WhatsApp Charles" aria-label="WhatsApp Charles">
+              <i data-lucide="phone-call" class="w-5 h-5 sm:w-6 sm:h-6 text-[#58A6FF]"></i>
+            </a>
+            <a href="https://x.com/yourusername" target="_blank" class="hover:scale-110 transition" title="Follow Charles on X" aria-label="Follow Charles on X">
+              <i data-lucide="twitter" class="w-5 h-5 sm:w-6 sm:h-6 text-[#58A6FF]"></i>
+            </a>
+            <a href="https://tiktok.com/@yourusername" target="_blank" class="hover:scale-110 transition" title="Follow Charles on TikTok" aria-label="Follow Charles on TikTok">
+              <i data-lucide="film" class="w-5 h-5 sm:w-6 sm:h-6 text-[#58A6FF]"></i>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="rounded-lg overflow-hidden shadow-xl border border-[#30363D] h-full min-h-[400px]">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.1608961394677!2d2.4700074999999906!3d6.373218999999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103caacf7c887bbb%3A0xcbe54197809b11b9!2sRue%201313%2C%20Cotonou!5e0!3m2!1sen!2sbj!4v1754000783952!5m2!1sen!2sbj" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Location map"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" class="fixed bottom-6 right-6 z-50 bg-[#1F6FEB] hover:bg-[#58A6FF] text-white w-12 h-12 rounded-full shadow-lg hover:scale-105 transition-transform duration-300 hidden flex items-center justify-center" onclick="scrollToTop()" aria-label="Back to top">
+    <span id="scrollPercent" class="absolute text-xs font-semibold text-white"></span>
+  </button>
+
+  <!-- Footer -->
+  <footer class="bg-[#0D1117] text-[#C9D1D9] py-10 px-4 sm:px-6 lg:px-8 font-inter border-t border-[#30363D]" aria-label="Footer">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <img src="assets/logo.png" alt="Code With Charles logo" class="w-8 h-8">
+          <span class="font-poppins font-semibold text-lg text-[#58A6FF]">Code With Charles</span>
+        </div>
+        <p class="text-sm text-[#A3A3A3] mb-4">
+          Building affordable, quality websites for businesses and individuals.
+        </p>
+        <div class="flex gap-4">
+          <a href="https://x.com/yourhandle" target="_blank" title="Twitter" class="hover:scale-110 transition" aria-label="Follow on Twitter">
+            <i data-lucide="twitter" class="w-5 h-5 text-[#1F6FEB]"></i>
+          </a>
+          <a href="https://tiktok.com/@yourhandle" target="_blank" title="TikTok" class="hover:scale-110 transition" aria-label="Follow on TikTok">
+            <i data-lucide="film" class="w-5 h-5 text-[#1F6FEB]"></i>
+          </a>
+          <a href="mailto:your@email.com" title="Email" class="hover:scale-110 transition" aria-label="Email">
+            <i data-lucide="mail" class="w-5 h-5 text-[#1F6FEB]"></i>
+          </a>
+          <a href="https://wa.me/234XXXXXXXXXX" target="_blank" title="WhatsApp" class="hover:scale-110 transition" aria-label="WhatsApp">
+            <i data-lucide="phone-call" class="w-5 h-5 text-[#1F6FEB]"></i>
+          </a>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4 text-sm">
+        <div>
+          <h4 class="text-[#58A6FF] font-semibold mb-2">Explore</h4>
+          <ul class="space-y-1">
+            <li><a href="#about" class="hover:underline hover:text-[#58A6FF]" aria-label="About section">About</a></li>
+            <li><a href="#services" class="hover:underline hover:text-[#58A6FF]" aria-label="Services section">Services</a></li>
+            <li><a href="#portfolio" class="hover:underline hover:text-[#58A6FF]" aria-label="Portfolio section">Projects</a></li>
+            <li><a href="#testimonials" class="hover:underline hover:text-[#58A6FF]" aria-label="Testimonials section">Testimonials</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-[#58A6FF] font-semibold mb-2">Support</h4>
+          <ul class="space-y-1">
+            <li><a href="#contact" class="hover:underline hover:text-[#58A6FF]" aria-label="Contact section">Contact</a></li>
+            <li><a href="#" class="hover:underline hover:text-[#58A6FF]" aria-label="FAQs">FAQs</a></li>
+            <li><a href="#" class="hover:underline hover:text-[#58A6FF]" aria-label="Privacy Policy">Privacy</a></li>
+            <li><a href="#" class="hover:underline hover:text-[#58A6FF]" aria-label="Terms of Service">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="mt-10 text-center text-xs text-[#A3A3A3]">
+      © <span id="year"></span> Code With Charles. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Initialize AOS
+    AOS.init();
+
+    // Set current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Back to Top Button
+    const btn = document.getElementById("backToTopBtn");
+    const percentText = document.getElementById("scrollPercent");
+
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+      if (scrollTop > 300) {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+
+      percentText.textContent = `${scrollPercent}%`;
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+
+(function(){
+  // elements
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navLinksContainer = document.getElementById('nav-links');
+  const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+  const underline = document.getElementById('nav-underline');
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  const nav = document.getElementById('main-nav');
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = () => window.innerWidth >= 768;
+
+  // keep last active and running animation
+  let currentActive = null;
+  let underlineAnim = null;
+
+  // helper to position underline immediately (no animation)
+  function setUnderlineInstant(left, width, visible = true) {
+    underline.style.transition = 'none';
+    underline.style.left = left + 'px';
+    underline.style.width = width + 'px';
+    underline.style.opacity = visible ? '1' : '0';
+    // force reflow
+    underline.getBoundingClientRect();
+    underline.style.transition = '';
+  }
+
+  // Animated elastic snap using the Web Animations API
+  function snapUnderlineTo(el) {
+    if (!underline || !el || prefersReduced || !isDesktop()) {
+      // fallback to instant placement
+      if (el) {
+        const containerRect = navLinksContainer.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
+        setUnderlineInstant(rect.left - containerRect.left, rect.width, true);
+      } else {
+        underline.style.opacity = '0';
+      }
+      return;
+    }
+
+    const containerRect = navLinksContainer.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
+    const startLeft = parseFloat(getComputedStyle(underline).left) || 0;
+    const startWidth = parseFloat(getComputedStyle(underline).width) || 0;
+
+    const targetLeft = rect.left - containerRect.left;
+    const targetWidth = rect.width;
+
+    // cancel previous animation
+    if (underlineAnim) underlineAnim.cancel();
+
+    // keyframes produce a small overshoot then settle
+    const keyframes = [
+      { left: startLeft + 'px', width: startWidth + 'px', offset: 0 },
+      { left: (targetLeft - targetWidth*0.08) + 'px', width: (targetWidth*1.16) + 'px', offset: 0.6 },
+      { left: targetLeft + 'px', width: targetWidth + 'px', offset: 1 }
+    ];
+
+    underline.style.opacity = '1';
+    underlineAnim = underline.animate(keyframes, {
+      duration: 450,
+      easing: 'cubic-bezier(.2,1.1,.3,1.15)' // gentle elastic feel
+    });
+
+    // write final values after animation finishes
+    underlineAnim.onfinish = () => {
+      setUnderlineInstant(targetLeft, targetWidth, true);
+      underlineAnim = null;
+    };
+  }
+
+  // immediate move (used for hover/focus without overshoot)
+  function moveUnderlineTo(el, opts = { animate: true }) {
+    if (!el || !navLinksContainer) {
+      underline.style.opacity = '0';
+      return;
+    }
+    const containerRect = navLinksContainer.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
+    const left = rect.left - containerRect.left;
+    const width = rect.width;
+
+    if (opts.animate && !prefersReduced && isDesktop()) {
+      // small non-elastic transition for hover
+      underline.style.transition = 'left .18s cubic-bezier(.2,.9,.2,1), width .18s cubic-bezier(.2,.9,.2,1), opacity .12s';
+      underline.style.left = left + 'px';
+      underline.style.width = width + 'px';
+      underline.style.opacity = '1';
+      // clear transition after short time
+      clearTimeout(moveUnderlineTo._t);
+      moveUnderlineTo._t = setTimeout(() => underline.style.transition = '', 220);
+    } else {
+      setUnderlineInstant(left, width, true);
+    }
+  }
+
+  // set active by section id (uses snap with elastic easing)
+  function setActiveById(id) {
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-link') === id) {
+        link.setAttribute('aria-current','page');
+        currentActive = link;
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+    if (currentActive) snapUnderlineTo(currentActive);
+  }
+
+  // IntersectionObserver to set active link
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveById(entry.target.id);
+        }
+      });
+    }, { root: null, rootMargin: '-36% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s));
+  } else {
+    // fallback simple
+    window.addEventListener('scroll', () => {
+      let found = null;
+      const scrollY = window.scrollY;
+      sections.forEach(s => {
+        const top = s.offsetTop - 120;
+        if (scrollY >= top) found = s;
+      });
+      if (found) setActiveById(found.id);
+    });
+  }
+
+  // hover/focus underline behavior (follow cursor, quick)
+  navLinks.forEach(link => {
+    link.addEventListener('mouseenter', (e) => {
+      if (!isDesktop()) return;
+      moveUnderlineTo(e.currentTarget, { animate: true });
+    });
+    link.addEventListener('mouseleave', () => {
+      if (!isDesktop()) return;
+      if (currentActive) moveUnderlineTo(currentActive, { animate: true });
+      else underline.style.opacity = '0';
+    });
+
+    link.addEventListener('focus', (e) => {
+      if (!isDesktop()) return;
+      moveUnderlineTo(e.currentTarget, { animate: true });
+    });
+    link.addEventListener('blur', () => {
+      if (!isDesktop()) return;
+      if (currentActive) moveUnderlineTo(currentActive, { animate: true });
+      else underline.style.opacity = '0';
+    });
+  });
+
+  // initialize underline on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const active = document.querySelector('.nav-link[aria-current="page"]');
+      if (active && isDesktop()) {
+        currentActive = active;
+        setUnderlineInstant(active.getBoundingClientRect().left - navLinksContainer.getBoundingClientRect().left, active.getBoundingClientRect().width, true);
+      } else underline.style.opacity = '0';
+    }, 120);
+  });
+
+  // ------------------- Glassy nav on scroll down -------------------
+  let lastY = window.scrollY || 0;
+  let ticking = false;
+  function onScroll() {
+    const y = window.scrollY || 0;
+    const scrollingDown = y > lastY && y > 40; // require 40px before adding glass
+    lastY = y;
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        if (scrollingDown) {
+          nav.classList.add('nav-glass');
+        } else {
+          nav.classList.remove('nav-glass');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  // Respect reduced-motion: if user prefers reduced motion, avoid toggling backdrop-filter (still allow a simple class)
+  if (!prefersReduced) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+  } else {
+    // still toggle minimal class but avoid backdrop-filter heavy changes
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY || 0;
+      if (y > 40) nav.classList.add('nav-glass'); else nav.classList.remove('nav-glass');
+    }, { passive: true });
+  }
+
+  // keep underline hidden on mobile/resize
+  window.addEventListener('resize', () => {
+    if (!isDesktop()) underline.style.opacity = '0';
+    else if (currentActive) snapUnderlineTo(currentActive);
+  });
+
+  // Mobile menu toggle / focus trap (you likely already have this — keep it)
+  function openMobileMenu() {
+    mobileMenu.classList.remove('hidden');
+    requestAnimationFrame(() => mobileMenu.classList.add('menu-open'));
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    menuBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('menu-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    setTimeout(() => mobileMenu.classList.add('hidden'), 260);
+  }
+  menuBtn.addEventListener('click', () => {
+    const isOpen = menuBtn.getAttribute('aria-expanded') === 'true';
+    if (isOpen) closeMobileMenu(); else openMobileMenu();
+  });
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target.matches('.nav-link')) closeMobileMenu();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (menuBtn.getAttribute('aria-expanded') === 'true') closeMobileMenu();
+    }
+  });
+
+})();
+
+
+
+  
+  (function(){
+    /* feature flags */
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    /* -------------------
+       Scroll reveal
+    --------------------*/
+    const reveals = document.querySelectorAll('.reveal');
+    if (!prefersReduced && 'IntersectionObserver' in window) {
+      const ro = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.18 });
+      reveals.forEach(r => ro.observe(r));
+    } else {
+      reveals.forEach(r => r.classList.add('is-visible'));
+    }
+
+    /* -------------------
+       Profile ripple (click & keyboard)
+    --------------------*/
+    const profile = document.getElementById('profileImage');
+    const rippleContainer = document.getElementById('ripple-container');
+
+    function createRipple(x, y) {
+      const rect = profile.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const size = Math.max(rect.width, rect.height) * 0.9;
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (x - rect.left - size/2) + 'px';
+      ripple.style.top  = (y - rect.top  - size/2) + 'px';
+      rippleContainer.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
+    }
+
+    // click
+    profile.addEventListener('click', (e) => {
+      if (isMobile || prefersReduced) return; // skip heavy effect for mobile or reduced motion
+      createRipple(e.clientX, e.clientY);
+    });
+    // keyboard (Enter / Space)
+    profile.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const rect = profile.getBoundingClientRect();
+        createRipple(rect.left + rect.width/2, rect.top + rect.height/2);
+      }
+    });
+
+    /* -------------------
+       Typed text: pause on hover/focus
+    --------------------*/
+    const typedText = document.getElementById("typed-text");
+    const cursor = document.getElementById("cursor");
+    const phrases = [
+      "I build websites.",
+      "I craft experiences.",
+      "I help businesses grow.",
+      "Let’s build something awesome."
+    ];
+    let phraseIndex = 0, letterIndex = 0, isDeleting = false, typingTimer = null;
+    const typingSpeed = 80, erasingSpeed = 40, delayBetween = 1600;
+
+    function typeLoop(){
+      const current = phrases[phraseIndex];
+      if (!isDeleting) {
+        letterIndex++;
+        typedText.textContent = current.slice(0, letterIndex);
+        if (letterIndex === current.length) {
+          isDeleting = true;
+          typingTimer = setTimeout(typeLoop, delayBetween);
+          return;
+        }
+        typingTimer = setTimeout(typeLoop, typingSpeed);
+      } else {
+        letterIndex--;
+        typedText.textContent = current.slice(0, letterIndex);
+        if (letterIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+        typingTimer = setTimeout(typeLoop, erasingSpeed);
+      }
+    }
+
+    // start typing unless user prefers reduced motion
+    if (!prefersReduced) {
+      // pause on hover/focus
+      const pauseTyping = () => { clearTimeout(typingTimer); };
+      const resumeTyping = () => { clearTimeout(typingTimer); typingTimer = setTimeout(typeLoop, 250); };
+
+      document.getElementById('home-heading').addEventListener('mouseenter', pauseTyping);
+      document.getElementById('home-heading').addEventListener('mouseleave', resumeTyping);
+      document.getElementById('typed-text').addEventListener('focus', pauseTyping);
+      document.getElementById('typed-text').addEventListener('blur', resumeTyping);
+
+      // start after small delay so page loads smoothly
+      setTimeout(typeLoop, 600);
+      // cursor blink (low cost)
+      setInterval(() => { cursor.style.opacity = (cursor.style.opacity === '0' ? '1' : '0'); }, 600);
+    } else {
+      // reduced motion fallback: show first phrase plainly
+      typedText.textContent = phrases[0];
+      cursor.style.display = 'none';
+    }
+
+    /* -------------------
+       Mouse-follow glow (rAF + throttling)
+    --------------------*/
+    const glow = document.getElementById('mouse-glow');
+    const hero = document.getElementById('home');
+
+    // set glow colors (keeps CSS simpler)
+    const setGlowColors = () => {
+      // gradient using brand colors
+      glow.style.background = 'radial-gradient(circle at center, rgba(31,111,235,0.35), rgba(138,43,226,0.18), transparent)';
+    };
+    setGlowColors();
+
+    if (!isMobile && !prefersReduced) {
+      let lastMove = 0, rafId = null;
+      hero.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        if (now - lastMove < 16) return; // cheap throttle (~60fps)
+        lastMove = now;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const rect = hero.getBoundingClientRect();
+          const x = e.clientX - rect.left - (glow.offsetWidth/2);
+          const y = e.clientY - rect.top  - (glow.offsetHeight/2);
+          glow.style.transform = `translate(${x}px, ${y}px)`;
+          glow.style.opacity = '0.22';
+        });
+      });
+
+      hero.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+      hero.addEventListener('mouseenter', () => { glow.style.opacity = '0.22'; });
+
+      // click ripple in hero (subtle)
+      hero.addEventListener('click', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple-effect';
+        ripple.style.position = 'absolute';
+        ripple.style.left = `${e.clientX - rect.left - 48}px`;
+        ripple.style.top = `${e.clientY - rect.top - 48}px`;
+        ripple.style.width = ripple.style.height = '96px';
+        ripple.style.borderRadius = '9999px';
+        ripple.style.background = 'rgba(31,111,235,0.16)';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.transition = 'transform .6s ease-out, opacity .6s ease-out';
+        hero.appendChild(ripple);
+        requestAnimationFrame(()=> {
+          ripple.style.transform = 'scale(2.5)';
+          ripple.style.opacity = '0';
+        });
+        setTimeout(()=> ripple.remove(), 650);
+      });
+    } else {
+      // hide glow and heavy effects on mobile or reduced motion
+      glow.style.display = 'none';
+    }
+
+    /* -------------------
+       Light cursor trail (very limited)
+    --------------------*/
+    if (!isMobile && !prefersReduced) {
+      let trailCount = 0;
+      const MAX_TRAILS = 12;
+
+      document.addEventListener('mousemove', (e) => {
+        if (++trailCount % 6 !== 0) return; // coarse throttle
+        const trail = document.createElement('div');
+        trail.className = 'trail-dot';
+        trail.style.position = 'fixed';
+        trail.style.left = `${e.clientX}px`;
+        trail.style.top = `${e.clientY}px`;
+        trail.style.width = trail.style.height = '8px';
+        trail.style.borderRadius = '999px';
+        trail.style.background = 'rgba(88,166,255,0.9)';
+        trail.style.zIndex = 9999;
+        trail.style.pointerEvents = 'none';
+        document.body.appendChild(trail);
+        setTimeout(()=> trail.remove(), 350);
+      });
+    }
+
+    /* cleanup on unload (good hygiene) */
+    window.addEventListener('unload', () => {
+      if (typeof cancelAnimationFrame === 'function') cancelAnimationFrame();
+      clearInterval(); // (not strictly necessary, general cleanup)
+    });
+
+  })();
+
+    // About Section
+  // Respect reduced motion
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- Scroll Reveal (IntersectionObserver) ---
+  const revealEls = document.querySelectorAll('.reveal');
+  if (prefersReduced) {
+    // Instantly show content for users who prefer reduced motion
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  } else if ('IntersectionObserver' in window) {
+    const ro = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    revealEls.forEach(el => ro.observe(el));
+  } else {
+    // Fallback: show all
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Respect reduce-motion preference
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Animate numeric counter from 0 -> target
+  function animateNumber(el, target, duration = 1200) {
+    if (prefersReduced) { el.textContent = target; return; }
+    const start = performance.now();
+    const from = 0;
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      el.textContent = Math.floor(from + (target - from) * t);
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Use IntersectionObserver to trigger when each .counter becomes visible
+  if ('IntersectionObserver' in window) {
+    const counterObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target;
+        card.querySelectorAll('.count').forEach(span => {
+          const target = parseInt(span.dataset.target, 10) || 0;
+          animateNumber(span, target);
+        });
+        obs.unobserve(card); // fire only once
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('.counter').forEach(card => counterObserver.observe(card));
+  } else {
+    // Fallback: animate immediately
+    document.querySelectorAll('.count').forEach(span => {
+      animateNumber(span, parseInt(span.dataset.target, 10) || 0);
+    });
+  }
+
+  // --- Skills progress animation (if you still have it) ---
+  if ('IntersectionObserver' in window) {
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const progress = entry.target.querySelector('.progress');
+          if (progress && progress.dataset && progress.dataset.width) {
+            progress.style.width = progress.dataset.width;
+          }
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.skill').forEach(skill => skillObserver.observe(skill));
+  } else {
+    // fallback: set widths now
+    document.querySelectorAll('.progress').forEach(p => {
+      if (p.dataset && p.dataset.width) p.style.width = p.dataset.width;
+    });
+  }
+});
+
+
+// journey bar progress animation
+// This script animates the progress of a timeline bar based on scroll position
+document.addEventListener('DOMContentLoaded', () => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+
+  const items = Array.from(timeline.querySelectorAll('.timeline-item'));
+  const progressEl = timeline.querySelector('.timeline-progress');
+
+  // Helper: clamp
+  const clamp = (v, a=0, b=1) => Math.max(a, Math.min(b, v));
+
+  // Observe each item to toggle .active
+  if ('IntersectionObserver' in window) {
+    const itemObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const el = entry.target;
+        if (entry.isIntersecting && entry.intersectionRatio > 0) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    }, { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0.01 });
+
+    items.forEach(i => itemObserver.observe(i));
+  } else {
+    // fallback: mark first item active
+    if (items[0]) items[0].classList.add('active');
+  }
+
+  // Update the progress bar height based on scroll position relative to the timeline element
+  function updateProgress() {
+    if (!progressEl) return;
+    const rect = timeline.getBoundingClientRect();
+    const winH = window.innerHeight || document.documentElement.clientHeight;
+    const total = rect.height;
+
+    // When timeline is completely below the viewport -> progress 0.
+    if (rect.top >= winH) {
+      progressEl.style.height = '0%';
+      return;
+    }
+
+    // When timeline is completely above the viewport -> progress 100.
+    if (rect.bottom <= 0) {
+      progressEl.style.height = '100%';
+      return;
+    }
+
+    // Compute how many pixels of the timeline have been scrolled past the top of viewport.
+    // We use (viewportTop - timelineTop) / totalHeight to get a 0..1 ratio
+    const scrolled = clamp((Math.max(0, -rect.top) / total), 0, 1);
+
+    // Optionally, to make "fill reach the center of active item", find first active item
+    const activeIndex = items.findIndex(it => it.classList.contains('active'));
+    if (activeIndex >= 0) {
+      const activeItem = items[activeIndex];
+      const itemRect = activeItem.getBoundingClientRect();
+      // measure offset of active item's center relative to timeline top
+      const centerY = (itemRect.top - rect.top) + (itemRect.height / 2);
+      const ratioToCenter = clamp(centerY / total, 0, 1);
+      // use a mix between scrolled and ratioToCenter for smoother behavior
+      const finalRatio = clamp( (scrolled * 0.6) + (ratioToCenter * 0.4) , 0, 1 );
+      progressEl.style.height = (finalRatio * 100) + '%';
+    } else {
+      progressEl.style.height = (scrolled * 100) + '%';
+    }
+  }
+
+  // Attach performant scroll handler
+  if (!prefersReduced) {
+    let raf = null;
+    const onScroll = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(updateProgress);
+    };
+    updateProgress();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  } else {
+    // reduced motion: simply set full progress
+    progressEl.style.height = '100%';
+  }
+});
+
+
+    
+
+    // Skills Progress Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const progress = entry.target.querySelector('.progress');
+          progress.style.width = progress.dataset.width;
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.skill').forEach(skill => {
+      observer.observe(skill);
+    });
+
+
+
+  document.querySelectorAll('[data-cta]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // If you have a modal with id="contactModal"
+      const modal = document.getElementById('contactModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.querySelector('input, textarea, button')?.focus();
+        // Optionally prefill a hidden field with the selected package
+        const pkgField = modal.querySelector('[name="interest"]');
+        if (pkgField) pkgField.value = btn.dataset.cta;
+      } else {
+        // Fallback: smooth scroll to contact
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+// Modal functionality for projects 
+  (function () {
+  const body = document.body;
+  let lastFocused = null;
+
+  function getFocusable(container) {
+    return Array.from(container.querySelectorAll(
+      'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    )).filter(el => !el.hasAttribute('disabled'));
+  }
+
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+
+    lastFocused = document.activeElement;
+    modal.classList.remove('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+    body.classList.add('overflow-hidden'); // prevent background scroll
+
+    const panel = modal.querySelector('.modal-panel');
+    // animate in
+    requestAnimationFrame(() => {
+      panel.classList.remove('opacity-0','translate-y-4','scale-[.98]');
+      panel.classList.add('opacity-100','translate-y-0','scale-100');
+    });
+
+    // focus trap
+    const focusables = getFocusable(modal);
+    (focusables[0] || panel).focus();
+
+    function onKeyDown(e) {
+      if (e.key === 'Escape') closeModal(modal);
+      if (e.key === 'Tab') {
+        const items = getFocusable(modal);
+        if (!items.length) { e.preventDefault(); return; }
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
+    }
+
+    function onClick(e) {
+      if (e.target.classList.contains('modal-backdrop') || e.target.classList.contains('modal-close')) {
+        closeModal(modal);
+      }
+    }
+
+    modal.addEventListener('keydown', onKeyDown);
+    modal.addEventListener('click', onClick);
+    modal._cleanup = () => {
+      modal.removeEventListener('keydown', onKeyDown);
+      modal.removeEventListener('click', onClick);
+    };
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    const panel = modal.querySelector('.modal-panel');
+
+    // animate out
+    panel.classList.add('opacity-0','translate-y-4','scale-[.98]');
+    panel.classList.remove('opacity-100','translate-y-0','scale-100');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      modal._cleanup && modal._cleanup();
+      body.classList.remove('overflow-hidden');
+      if (lastFocused) lastFocused.focus();
+    }, 180); // match transition duration
+  }
+
+  // open hooks
+  document.querySelectorAll('[data-modal-open]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      openModal(btn.getAttribute('data-modal-open'));
+    });
+  });
+})();
+
+
+
+ (function(){
+  const container = document.getElementById('testimonials-carousel');
+  if (!container) return;
+
+  const track = container.querySelector('.carousel-track');
+  const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+  const prevBtn = document.querySelector('.testimonial-prev');
+  const nextBtn = document.querySelector('.testimonial-next');
+  const indicators = Array.from(document.querySelectorAll('.indicator'));
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let current = 0;
+  let autoplayInterval = 6000; // ms
+  let autoplayTimer = null;
+  let isPaused = false;
+  let startX = 0, currentX = 0, dragging = false;
+
+  // Helpers
+  function goTo(index, { animate=true } = {}) {
+    current = (index + slides.length) % slides.length;
+    const offset = -current * container.clientWidth;
+    if (!animate || prefersReduced) track.style.transition = 'none';
+    else track.style.transition = '';
+    track.style.transform = `translateX(${offset}px)`;
+
+    // update indicators and aria
+    indicators.forEach(btn => {
+      const idx = parseInt(btn.dataset.index,10);
+      const pressed = idx === current;
+      btn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      btn.style.opacity = pressed ? '1' : '0.6';
+    });
+    // announce change for screen readers (aria-live alternative)
+    // set visible attribute on current slide (optional)
+    slides.forEach((s,i) => s.setAttribute('aria-hidden', i === current ? 'false' : 'true'));
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  // Autoplay
+  function startAutoplay() {
+    if (prefersReduced) return;
+    stopAutoplay();
+    autoplayTimer = setInterval(() => { if (!isPaused) next(); }, autoplayInterval);
+  }
+  function stopAutoplay() { if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; } }
+
+  // Pause on hover/focus
+  container.addEventListener('mouseenter', () => { isPaused = true; });
+  container.addEventListener('mouseleave', () => { isPaused = false; });
+  container.addEventListener('focusin', () => { isPaused = true; });
+  container.addEventListener('focusout', () => { isPaused = false; });
+
+  // Buttons
+  nextBtn.addEventListener('click', (e) => { e.preventDefault(); next(); startAutoplay(); });
+  prevBtn.addEventListener('click', (e) => { e.preventDefault(); prev(); startAutoplay(); });
+
+  // Indicators
+  indicators.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const idx = parseInt(btn.dataset.index,10);
+      goTo(idx);
+      startAutoplay();
+    });
+  });
+
+  // Keyboard navigation
+  container.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { prev(); startAutoplay(); }
+    if (e.key === 'ArrowRight') { next(); startAutoplay(); }
+  });
+
+  // Swipe / Drag support (pointer events)
+  container.addEventListener('pointerdown', (e) => {
+    // left mouse or touch only
+    dragging = true;
+    startX = e.clientX;
+    currentX = startX;
+    track.style.transition = 'none';
+    container.setPointerCapture(e.pointerId);
+  });
+
+  container.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    currentX = e.clientX;
+    const dx = currentX - startX;
+    // translate track by dx relative to current slide
+    const offset = -current * container.clientWidth + dx;
+    track.style.transform = `translateX(${offset}px)`;
+  });
+
+  container.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    const dx = currentX - startX;
+    const threshold = container.clientWidth * 0.18; // swipe threshold
+    if (dx > threshold) prev();
+    else if (dx < -threshold) next();
+    else goTo(current); // snap back
+    try { container.releasePointerCapture(e.pointerId); } catch(err){}
+  });
+
+  container.addEventListener('pointercancel', () => {
+    dragging = false;
+    goTo(current);
+  });
+
+  // Pause if carousel is out of view (IntersectionObserver)
+  let inView = true;
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        inView = e.isIntersecting;
+        if (!inView) isPaused = true;
+        else isPaused = false;
+      });
+    }, { threshold: 0.5 });
+    io.observe(container);
+  }
+
+  // Resize handler: recalc track translate on width change
+  window.addEventListener('resize', () => { goTo(current, { animate:false }); });
+
+  // init
+  goTo(0, { animate: false });
+  startAutoplay();
+
+  // expose for debugging if needed
+  container.__carousel = { next, prev, goTo, startAutoplay, stopAutoplay };
+})();
+
+    // EmailJS Integration
+    emailjs.init("YOUR_PUBLIC_KEY");
+
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = this;
+      emailjs.send("service_XXXXXXX", "template_XXXXXXX", {
+        name: form.name.value,
+        subject: form.subject.value,
+        email: form.email.value,
+        message: form.message.value,
+      }).then(function(response) {
+        document.getElementById("contact-status").classList.remove("hidden");
+        form.reset();
+        setTimeout(() => {
+          document.getElementById("contact-status").classList.add("hidden");
+        }, 3000);
+      }, function(error) {
+        alert("Failed to send message: " + error.text);
+      });
+    });
+
+    document.getElementById("testimonialSubmitForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = this;
+      emailjs.send("your_service_id", "your_template_id", {
+        name: form.name.value,
+        email: form.email.value,
+        title: form.title.value,
+        message: form.message.value
+      }).then(() => {
+        document.getElementById("testimonial-status").classList.remove("hidden");
+        form.reset();
+        setTimeout(() => {
+          document.getElementById("testimonial-status").classList.add("hidden");
+          closeTestimonialModal();
+        }, 2000);
+      }, (error) => {
+        alert("Error sending testimonial: " + error.text);
+      });
+    });
+  </script>
+</body>
+</html>

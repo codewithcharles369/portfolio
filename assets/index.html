@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Elevate - The Future of Blogging</title>
+   <script src="particles.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Body */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #2d2a4a, #1e1c39);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+
+#navbar {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 10px 30px;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+#navbar ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+#navbar li {
+    display: inline;
+}
+
+#navbar a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    transition: background 0.3s;
+}
+
+#navbar a:hover {
+    background-color: #6c4ac9; /* Hover effect */
+    border-radius: 5px;
+}
+
+.parallax {
+    background: url('imgs/photographer.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+    z-index: -1;  /* Behind other content */
+}
+
+.hero, .features, .cta, .footer {
+    position: relative;
+    z-index: 1;  /* Keep content above parallax background */
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Behind other elements */
+    background: linear-gradient(to bottom right,#6a11cb, #2575fc); /* Fallback */
+}
+
+.hero {
+    position: relative;
+    z-index: 1; /* Above particles */
+    align-items: center;
+    justify-content: center;
+    padding: 100px 50px;
+    color: white;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    text-align: left;
+}
+.hero .container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.hero .container img{
+   border-radius: 5px;
+}
+
+/* Hero Content */
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.hero-content h1 .fade-in {
+    display: block;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+}
+
+.hero-content h1 .dynamic-text {
+    color: #ffd700;
+    animation: typeEffect 4s steps(20) infinite;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid white;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin: 20px 0 30px;
+    opacity: 0;
+    animation: slideUp 2s 1s forwards;
+}
+
+.hero-content .btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background: linear-gradient(to right, #ffd700, #ff5733);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    transform: scale(0.8);
+    animation: scaleUp 2s 1.5s forwards;
+}
+
+.hero-content .btn:hover {
+    background: linear-gradient(to right, #ff5733, #ffd700);
+}
+
+/* Hero Graphics */
+.hero-graphics img {
+    max-width: 500px;
+    animation: float 3s infinite ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes typeEffect {
+    0%, 20% {
+        content: "Blogging";
+    }
+    40% {
+        content: "Creating";
+    }
+    60% {
+        content: "Sharing";
+    }
+    80%, 100% {
+        content: "Elevating";
+    }
+}
+
+/* Features Section Styling */
+.features {
+    background-color: #f4f4f9;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.features-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 1s ease-out; /* Smooth transition */
+}
+
+/* Fade In Animation */
+.feature.visible {
+    opacity: 1;
+}
+
+.feature i {
+    font-size: 3rem;
+    color: #6a11cb;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.feature i:hover {
+    color: #2575fc;
+    transform: scale(1.1);
+}
+
+.feature i {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.logo1{
+    color:#2575fc ;
+}
+
+.logo2{
+    color:#6a11cb;
+}
+
+.feature i:hover {
+    text-shadow: 0 0 8px rgba(38, 198, 255, 0.8), 0 0 10px rgba(38, 198, 255, 0.8);
+}
+
+.feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    color: #555;
+    font-size: 1rem;
+}
+
+
+/* Styling for Feature Icons */
+.feature i {
+    font-size: 3rem; /* Larger icons */
+    color: #6a11cb; /* Start with the purple color */
+    transition: all 0.3s ease; /* Smooth transition */
+    margin-bottom: 20px; /* Spacing between icon and text */
+}
+
+/* Hover Effect for Icons */
+.feature:hover i {
+    color: #2575fc; /* Blue color on hover */
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Adding a gradient color to the icons */
+.feature i {
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Purple to Blue gradient */
+    -webkit-background-clip: text; /* Clips background to text */
+    color: transparent; /* Make icon text transparent so the background shows */
+}
+
+/* Optional: Add a subtle glow effect */
+.feature i:hover {
+    text-shadow: 0 0 8px rgba(38, 198, 255, 0.8), 0 0 10px rgba(38, 198, 255, 0.8);
+}
+
+/* CTA Section Styling */
+.cta {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    padding: 100px 20px;
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    margin-top: 60px;
+}
+
+.cta-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-container p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #fff;
+    color: #6a11cb;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #2575fc;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Add subtle animation to the CTA */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cta-container {
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Testimonial Section Styling */
+.testimonials {
+    background-color: #f6f6f6;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: #6a11cb;
+}
+
+.testimonial-carousel {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.testimonial-slide {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.testimonial-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.testimonial-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6a11cb;
+}
+
+.testimonial-role {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #888;
+}
+
+.carousel-prev, .carousel-next {
+    
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    background-color: transparent;
+    border: none;
+    color: #6a11cb;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-prev {
+    left: 20px;
+}
+
+.carousel-next {
+    right: 20px;
+}
+
+.carousel-prev:hover, .carousel-next:hover {
+    color: #2575fc;
+}
+
+/* Add subtle animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.testimonials {
+    animation: fadeInUp 1s ease-out;
+}
+/* Footer Section Styling */
+#footer {
+    background-color: #2c2c2c;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.footer-logo img {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+.footer-logo p {
+    font-size: 1rem;
+    color: #bbb;
+}
+
+.footer-links, .footer-social {
+    margin: 20px;
+}
+
+.footer-links h3, .footer-social h3 {
+    font-size: 1.4rem;
+    color: #6a11cb;
+    margin-bottom: 15px;
+}
+
+.footer-links ul, .footer-social ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links li, .footer-social li {
+    margin: 10px 0;
+}
+
+.footer-links a, .footer-social a {
+    text-decoration: none;
+    color: #bbb;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover, .footer-social a:hover {
+    color: #6a11cb;
+}
+
+.footer-social ul {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-social i {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    color: #bbb;
+}
+
+.footer-social i:hover {
+    transform: scale(1.1);
+    color: #6a11cb;
+}
+@media screen and (max-width: 800px){
+    .hero .container{
+        display: block;
+        margin: 50px;
+    }
+    .hero-content{
+        margin: 100px;;
+    }
+}
+
+</style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div id="particles-js"></div>
+    <header class="hero" id="hero">
+        
+            <div id="navbar">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#cta">Get Started</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#footer">Footer</a></li>
+                </ul>
+            </div>
+       
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    <span class="fade-in">Welcome to</span>
+                    <span class="dynamic-text"></span>
+                </h1>
+                <p class="slide-up">
+                    The future of blogging starts here. Share, connect, and grow.
+                </p>
+                <a href="#cta" class="btn scale-up">Get Started</a>
+            </div>
+            <div class="hero-graphics">
+                <img src="assets/Elevate -Your Chance to be more-.jpg" alt="Futuristic Blog Illustration" class="float-animation" />
+            </div>
+        </div>
+    </header>
+
+    <section id="features" class="features">
+        <div class="features-container">
+            <!-- Feature 1 -->
+            <div class="feature">
+                <i class="fas fa-cogs"></i>
+                <h3>Fast & Easy Setup</h3>
+                <p>Get started in just a few clicks with an intuitive setup process.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature">
+                <i class="fas fa-palette"></i>
+                <h3>Customizable Themes</h3>
+                <p>Tailor the platform's design to fit your brand's style and identity.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <h3>Real-Time Collaboration</h3>
+                <p>Collaborate instantly with your team and users in real time.</p>
+            </div>
+    
+            <!-- Feature 4 -->
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Top-Tier Security</h3>
+                <p>Your data is safe with advanced encryption and security protocols.</p>
+            </div>
+    
+            <!-- Feature 5 -->
+            <div class="feature">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobile Friendly</h3>
+                <p>Access your platform anywhere with fully responsive mobile design.</p>
+            </div>
+    
+            <!-- Feature 6 -->
+            <div class="feature">
+                <i class="fas fa-cloud"></i>
+                <h3>Cloud Integration</h3>
+                <p>Seamlessly sync data and store files with cloud-based solutions.</p>
+            </div>
+
+            <!-- New Features -->
+        <div class="feature">
+            <i class="fas fa-chart-line"></i>
+            <h3>Analytics & Insights</h3>
+            <p>Gain valuable insights with advanced analytics tools for data-driven decisions.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-robot"></i>
+            <h3>AI-Powered Tools</h3>
+            <p>Enhance your productivity with AI-powered tools and automation.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-language"></i>
+            <h3>Multi-Language Support</h3>
+            <p>Reach a global audience with multilingual capabilities.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-headset"></i>
+            <h3>24/7 Support</h3>
+            <p>Our dedicated support team is available around the clock to assist you.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-plug"></i>
+            <h3>Tool Integrations</h3>
+            <p>Connect with popular tools and services to enhance your workflow.</p>
+        </div>
+        <div class="feature">
+            <i class="fas fa-tachometer-alt"></i>
+            <h3>High-Performance Speed</h3>
+            <p>Enjoy lightning-fast performance, even with large data volumes.</p>
+        </div>
+        </div>
+    </section>
+
+    <!-- Call-to-Action Section -->
+    <section id="cta" class="cta">
+        <div class="cta-container">
+            <h2>Ready to Elevate Your Experience?</h2>
+            <p>Join us today and unlock a world of possibilities with the latest in technology and design. Your journey begins now!</p>
+            <a href="login.php" class="cta-button">Get Started</a>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <h2>What Our Users Are Saying</h2>
+        <div class="testimonial-carousel">
+            <div class="testimonial-slide">
+                <img src="assets/purple-profile.jpg" alt="User 1" class="testimonial-img">
+                <p class="testimonial-text">"Elevate has transformed the way I interact with others. The platform is so easy to use, and the design is out of this world!"</p>
+                <h3 class="testimonial-name">John Doe</h3>
+                <p class="testimonial-role">Software Developer</p>
+            </div>
+            <div class="testimonial-slide">
+                <img src="assets/me2.jpg" alt="User 2" class="testimonial-img">
+                <p class="testimonial-text">"I love the modern design and user-friendly interface. Elevate has made my work so much more efficient!"</p>
+                <h3 class="testimonial-name">Jane Smith</h3>
+                <p class="testimonial-role">UI/UX Designer</p>
+            </div>
+            <!-- Add more testimonials here -->
+        </div>
+        <!-- Navigation arrows -->
+        <button class="carousel-prev" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="carousel-next" onclick="moveSlide(1)">&#10095;</button>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h1><span class="logo1">Ele</span><span class="logo2">Vate</span></h1>
+                <p>&copy; 2025 Elevate. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const dynamicText = document.querySelector(".dynamic-text");
+    const words = ["Blogging", "Creating", "Sharing", "Elevating"];
+    let index = 0;
+
+    setInterval(() => {
+        dynamicText.textContent = words[index];
+        index = (index + 1) % words.length;
+    }, 2000);
+});
+    </script>
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 80,
+                    density: { enable: true, value_area: 800 }
+                },
+                color: { value: "#ffffff" },
+                shape: {
+                    type: "circle",
+                    stroke: { width: 0, color: "#000000" },
+                    polygon: { nb_sides: 5 }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false,
+                    anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: { enable: false, speed: 40, size_min: 0.1, sync: false }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 400, line_linked: { opacity: 1 } },
+                    bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+                    repulse: { distance: 200, duration: 0.4 },
+                    push: { particles_nb: 4 },
+                    remove: { particles_nb: 2 }
+                }
+            },
+            retina_detect: true
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+});
+window.addEventListener("scroll", () => {
+    const parallax = document.querySelector(".parallax");
+    const offset = window.pageYOffset;
+    parallax.style.transform = `translateY(${offset * 0.2}px)`;
+});
+// Intersection Observer for Fade-In Effect on Scroll
+document.addEventListener("DOMContentLoaded", function() {
+    // Select all feature elements
+    const features = document.querySelectorAll('.feature');
+
+    // Options for the intersection observer
+    const options = {
+        root: null, // Use the viewport as the root
+        threshold: 0.2 // Trigger when 20% of the element is visible
+    };
+
+    // Intersection Observer callback function
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add 'visible' class to trigger fade-in animation
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Stop observing once it's visible
+            }
+        });
+    }, options);
+
+    // Observe each feature element
+    features.forEach(feature => {
+        observer.observe(feature);
+    });
+});
+let currentSlide = 0;
+const slides = document.querySelectorAll('.testimonial-slide');
+
+function showSlide(index) {
+    if (index >= slides.length) {
+        currentSlide = 0;
+    } else if (index < 0) {
+        currentSlide = slides.length - 1;
+    } else {
+        currentSlide = index;
+    }
+    
+    // Hide all slides
+    slides.forEach((slide) => {
+        slide.style.display = 'none';
+    });
+
+    // Show the current slide
+    slides[currentSlide].style.display = 'block';
+}
+
+// Function to move the slide
+function moveSlide(direction) {
+    showSlide(currentSlide + direction);
+}
+
+// Initially show the first slide
+showSlide(currentSlide);
+
+// Optional: Auto-slide every 5 seconds
+setInterval(() => {
+    moveSlide(1);
+}, 5000);
+    </script>
+</body>
+</html>
